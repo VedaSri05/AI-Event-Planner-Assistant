@@ -1,5 +1,4 @@
 flask
-flask-cors
 spacy
 scikit-learn
 gunicorn
