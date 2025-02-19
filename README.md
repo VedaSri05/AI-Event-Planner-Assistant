@@ -32,6 +32,8 @@ AI_Event_Planner_Assistant/
 ├── requirements.txt       # Dependencies for deployment
 ├── Procfile               # Deployment config for Render
 ├── README.md              # Documentation
+├── revenue_calculator.py  # Revenue Calculations
+├── revenue_forecast.py    # Revenue Forecasting
 ```
 
 ## 📌 Future Enhancements
