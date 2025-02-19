@@ -1,11 +1,13 @@
 from flask import Flask, request, jsonify
 import spacy
+import spacy.cli
 import random
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 app = Flask(__name__)
 
 # Load spaCy NLP model
+spacy.cli.download("en_core_web_sm")
 nlp = spacy.load("en_core_web_sm")
 
 # Sample event data
