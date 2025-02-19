@@ -1,13 +1,17 @@
 from flask import Flask, request, jsonify
+import os
 import spacy
+import spacy.util
 import spacy.cli
 import random
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 app = Flask(__name__)
 
-# Load spaCy NLP model
-spacy.cli.download("en_core_web_sm")
+# Check if model is already installed
+if not spacy.util.is_package("en_core_web_sm"):
+    spacy.cli.download("en_core_web_sm")
+
 nlp = spacy.load("en_core_web_sm")
 
 # Sample event data
@@ -54,4 +58,5 @@ def plan_event():
     return jsonify({"message": response})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Get PORT from environment variable
+    app.run(host="0.0.0.0", port=port)
