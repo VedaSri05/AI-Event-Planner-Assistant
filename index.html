@@ -19,25 +19,29 @@
 
     <script>
         function getEventPlan() {
-            const eventType = document.getElementById("eventType").value;
+            const eventType = document.getElementById("eventType").value.trim(); // Remove extra spaces
 
             fetch("https://ai-event-planner-assistant.onrender.com/plan_event", {
                 method: "POST",
                 headers: { 
+                    "Accept": "application/json", 
                     "Content-Type": "application/json" 
                 },
                 body: JSON.stringify({ event_type: eventType }) // Convert input to JSON
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Server responded with status: " + response.status);
+                }
+                return response.json();
+            })
             .then(data => { 
                 document.getElementById("response").innerText = data.message; 
             })
             .catch(error => { 
-                document.getElementById("response").innerText = "Error: " + error; 
+                document.getElementById("response").innerText = "Error: " + error.message; 
             });
         }
-
-    </script>
     </script>
 </body>
 </html>
