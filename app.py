@@ -42,21 +42,26 @@ def home():
 @app.route("/plan_event", methods=["GET", "POST"])
 
 def plan_event():
-    data = request.json
-    user_input = data.get("event_type", "").lower()
+    try:
+        data = request.get_json(force=True)  # Ensures JSON request is processed correctly
+        user_input = data.get("event_type", "").lower()
 
-    # Process input with spaCy NLP
-    processed_text = " ".join([token.lemma_ for token in nlp(user_input) if not token.is_stop])
+        # Process input with spaCy NLP
+        processed_text = " ".join([token.lemma_ for token in nlp(user_input) if not token.is_stop])
 
-    # Match input to the closest event type using TF-IDF
-    input_vector = vectorizer.transform([processed_text])
-    event_scores = input_vector.dot(vectorizer.transform(event_types).T).toarray().flatten()
-    best_match_index = event_scores.argmax()
+        # Match input to the closest event type using TF-IDF
+        input_vector = vectorizer.transform([processed_text])
+        event_scores = input_vector.dot(vectorizer.transform(event_types).T).toarray().flatten()
+        best_match_index = event_scores.argmax()
 
-    best_event = event_types[best_match_index]
-    response = random.choice(event_data[best_event])
+        best_event = event_types[best_match_index]
+        response = random.choice(event_data[best_event])
 
-    return jsonify({"message": response})
+        return jsonify({"message": response})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500  # Return error message if something goes wrong
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # Get PORT from environment variable
