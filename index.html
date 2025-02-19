@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Event Planner</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        input, button { padding: 10px; margin: 10px; }
+        #response { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2>AI Event Planner Assistant</h2>
+    <p>Enter event type (e.g., wedding, corporate, birthday):</p>
+    <input type="text" id="eventType" placeholder="Enter event type...">
+    <button onclick="getEventPlan()">Get Plan</button>
+    <p id="response"></p>
+
+    <script>
+        function getEventPlan() {
+            const eventType = document.getElementById("eventType").value;
+            fetch("https://ai-event-planner-assistant.onrender.com/plan_event", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ event_type: eventType })
+            })
+            .then(response => response.json())
+            .then(data => { document.getElementById("response").innerText = data.message; })
+            .catch(error => { document.getElementById("response").innerText = "Error: " + error; });
+        }
+    </script>
+</body>
+</html>
