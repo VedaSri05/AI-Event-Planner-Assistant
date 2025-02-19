@@ -32,7 +32,6 @@ AI_Event_Planner_Assistant/
 ├── requirements.txt       # Dependencies for deployment
 ├── Procfile               # Deployment config for Render
 ├── README.md              # Documentation
-├── AI_Event_Planner_Report.pdf  # Final Report
 ```
 
 ## 📌 Future Enhancements
