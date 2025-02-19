@@ -46,7 +46,7 @@ vectorizer.fit(event_types)
 def home():
     return "AI Event Planner Assistant is running with Local NLP!"
 
-@app.route("/plan_event", methods=["POST"])
+@app.route("/plan_event", methods=["GET", "POST"])
 def plan_event():
     try:
         # Ensure JSON format
